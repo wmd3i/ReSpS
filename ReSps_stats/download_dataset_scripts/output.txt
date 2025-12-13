@@ -1,0 +1,261 @@
+bash download_dataset_scripts/setup_conversational_training.sh 
+=== EAGLE Training Data Pipeline ===
+Setting up directories...
+
+=== Step 1: Download Datasets ===
+Download ShareGPT dataset...
+  huggingface-cli download --repo-type dataset anon8231489123/ShareGPT_Vicuna_unfiltered --local-dir ./training_data/raw/sharegpt
+Download UltraChat-200K dataset...
+  huggingface-cli download --repo-type dataset HuggingFaceH4/ultrachat_200k --local-dir ./training_data/raw/ultrachat
+
+=== Step 2: Convert to EAGLE Format ===
+Converting ShareGPT to EAGLE format...
+Converting ShareGPT data from ./training_data/raw/sharegpt/ShareGPT_V3_unfiltered_cleaned_split.json to ./training_data/processed/eagle_sharegpt.jsonl
+Converting conversations: 100%|████████████████████████| 94145/94145 [00:02<00:00, 44670.56it/s]
+Conversion complete!
+Converted: 58750 conversations
+Skipped: 35395 conversations
+Output saved to: ./training_data/processed/eagle_sharegpt.jsonl
+✓ ShareGPT conversion complete
+
+Converting UltraChat-200K to EAGLE format...
+Converting UltraChat Parquet data from ./training_data/raw/ultrachat/data to ./training_data/processed/eagle_ultrachat.jsonl
+Found 3 Parquet files:
+  train_sft-00000-of-00003-a3ecf92756993583.parquet
+  train_sft-00002-of-00003-ee46ed25cfae92c6.parquet
+  train_sft-00001-of-00003-0a1804bcb6ae68c6.parquet
+
+Processing train_sft-00000-of-00003-a3ecf92756993583.parquet...
+  Loaded 69289 rows
+  Columns: ['prompt', 'prompt_id', 'messages']
+  Sample row type: <class 'pandas.core.series.Series'>
+  Sample messages type: <class 'numpy.ndarray'>
+  First message type: <class 'dict'>
+  First message sample: {'content': "These instructions apply to section-based themes (Responsive 6.0+, Retina 4.0+, Parallax 3.0+ Turbo 2.0+, Mobilia 5.0+). What theme version am I using?\nOn your Collections pages & Featur...
+Converting train_sft-00000-of-00003-a3ecf92756993583.parquet: 100%|█| 69289/69289 [00:04<00:00, 
+
+Processing train_sft-00002-of-00003-ee46ed25cfae92c6.parquet...
+  Loaded 69288 rows
+  Columns: ['prompt', 'prompt_id', 'messages']
+  Sample row type: <class 'pandas.core.series.Series'>
+  Sample messages type: <class 'numpy.ndarray'>
+  First message type: <class 'dict'>
+  First message sample: {'content': 'Describe a moment in your life that had a significant impact on who you are today. How did it change your perspective, priorities, or approach to life? Be specific about the event and how...
+Converting train_sft-00002-of-00003-ee46ed25cfae92c6.parquet: 100%|█| 69288/69288 [00:04<00:00, 
+
+Processing train_sft-00001-of-00003-0a1804bcb6ae68c6.parquet...
+  Loaded 69288 rows
+  Columns: ['prompt', 'prompt_id', 'messages']
+  Sample row type: <class 'pandas.core.series.Series'>
+  Sample messages type: <class 'numpy.ndarray'>
+  First message type: <class 'dict'>
+  First message sample: {'content': 'What are some useful tips for organizing my closet and keeping it tidy?', 'role': 'user'}
+Converting train_sft-00001-of-00003-0a1804bcb6ae68c6.parquet: 100%|█| 69288/69288 [00:04<00:00, 
+
+Conversion complete!
+Converted: 207834 conversations
+Skipped: 31 conversations
+Output saved to: ./training_data/processed/eagle_ultrachat.jsonl
+✓ UltraChat conversion complete
+
+=== Step 3: Data Validation ===
+Validating ShareGPT data...
+Validating EAGLE data: ./training_data/processed/eagle_sharegpt.jsonl
+
+=== Validation Results ===
+Total conversations: 58750
+Valid conversations: 58666
+Success rate: 99.86%
+
+=== Conversation Statistics ===
+Average conversation length: 6.83 turns
+Median conversation length: 6.00 turns
+Min/Max conversation length: 2/138 turns
+
+=== Turn Statistics ===
+Average turn length: 128.15 words
+Median turn length: 58.00 words
+Min/Max turn length: 1/63949 words
+
+=== Most Common Role Patterns ===
+human → gpt: 19153 (32.6%)
+human → gpt → human → gpt: 9418 (16.1%)
+human → gpt → human → gpt → human → gpt: 7604 (13.0%)
+human → gpt → human → gpt → human → gpt → human → gpt: 6505 (11.1%)
+human → gpt → human → gpt → human → gpt → human → gpt → human → gpt: 5154 (8.8%)
+human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt: 3796 (6.5%)
+human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt: 2673 (4.6%)
+human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt: 1584 (2.7%)
+human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt: 863 (1.5%)
+human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt: 529 (0.9%)
+
+=== Errors (showing first 20) ===
+Line 25: Empty content at index 2
+Line 1311: Empty content at index 0
+Line 2947: Empty content at index 6
+Line 4398: Empty content at index 0
+Line 4468: Empty content at index 6
+Line 4815: Empty content at index 6
+Line 5025: Empty content at index 0
+Line 5054: Empty content at index 6
+Line 5393: Empty content at index 4
+Line 6109: Empty content at index 0
+Line 7414: Empty content at index 2
+Line 7417: Empty content at index 6
+Line 7893: Empty content at index 6
+Line 8136: Empty content at index 8
+Line 8262: Empty content at index 4
+Line 9065: Empty content at index 0
+Line 9873: Empty content at index 4
+Line 11607: Empty content at index 0
+Line 12765: Empty content at index 1
+Line 13870: Empty content at index 4
+... and 64 more errors
+
+=== Sample Conversations (first 3) ===
+
+Sample 1 (ID: QWJhYvA_0):
+  human: Summarize the main ideas of Jeff Walker's Product Launch Formula into bullet points as it pertains t...
+  gpt: Here are the main ideas of Jeff Walker's Product Launch Formula that can be applied by a growth mark...
+  human: Summarize the main ideas of Brendon Burchard's Experts Academy into bullet points as it pertains to ...
+  gpt: Here are the main ideas of Brendon Burchard's Experts Academy that can be applied by a growth market...
+  ... and 8 more turns
+
+Sample 2 (ID: i6IyJda_0):
+  human: How to tell if a customer segment is well segmented? In 3 bullet points.
+  gpt: 1. Homogeneity: The segment should consist of customers who share similar characteristics and behavi...
+
+Sample 3 (ID: A5AbcES_0):
+  human: In Java, I want to replace string like "This is a new {object} at {place}" with a Map, {object: "stu...
+  gpt: You can use the `String.format()` method in Java to replace placeholders in a string with values fro...
+
+Validating UltraChat data...
+Validating EAGLE data: ./training_data/processed/eagle_ultrachat.jsonl
+
+=== Validation Results ===
+Total conversations: 207834
+Valid conversations: 207834
+Success rate: 100.00%
+
+=== Conversation Statistics ===
+Average conversation length: 6.33 turns
+Median conversation length: 6.00 turns
+Min/Max conversation length: 2/14 turns
+
+=== Turn Statistics ===
+Average turn length: 145.29 words
+Median turn length: 80.00 words
+Min/Max turn length: 1/2521 words
+
+=== Most Common Role Patterns ===
+human → gpt → human → gpt → human → gpt: 67866 (32.7%)
+human → gpt → human → gpt: 67111 (32.3%)
+human → gpt → human → gpt → human → gpt → human → gpt: 55545 (26.7%)
+human → gpt → human → gpt → human → gpt → human → gpt → human → gpt: 9576 (4.6%)
+human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt: 4264 (2.1%)
+human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt: 3461 (1.7%)
+human → gpt: 11 (0.0%)
+
+=== Sample Conversations (first 3) ===
+
+Sample 1 (ID: ultrachat_0):
+  human: These instructions apply to section-based themes (Responsive 6.0+, Retina 4.0+, Parallax 3.0+ Turbo ...
+  gpt: This feature only applies to Collection pages and Featured Collections sections of the section-based...
+  human: Can you guide me through the process of enabling the secondary image hover feature on my Collection ...
+  gpt: Sure, here are the steps to enable the secondary image hover feature on your Collection pages and Fe...
+  ... and 4 more turns
+
+Sample 2 (ID: ultrachat_1):
+  human: Which famous landmarks should I visit in London, beyond the usual ones?
+  gpt: 1. Leadenhall Market - a beautiful indoor market with stunning Victorian architecture, also used as ...
+  human: Hmm, those are interesting suggestions, but I've already seen so many touristy landmarks in London. ...
+  gpt: Absolutely! Here are some offbeat and lesser-known things to see in London that locals might recomme...
+  ... and 8 more turns
+
+Sample 3 (ID: ultrachat_2):
+  human: Write a comprehensive blog post of at least 1000 words about the top 10 most eco-friendly cities in ...
+  gpt: In the recent years, there has been a growing awareness of the necessity of developing sustainable c...
+  human: This is a really informative post about the top eco-friendly cities and their renewable energy initi...
+  gpt: Absolutely! Waste management is an important aspect of sustainability as it helps cities reduce thei...
+  ... and 4 more turns
+
+=== Step 4: Combine Datasets (Optional) ===
+Combining ShareGPT and UltraChat datasets...
+✓ Combined dataset created: ./training_data/processed/eagle_combined.jsonl
+Validating EAGLE data: ./training_data/processed/eagle_combined.jsonl
+
+=== Validation Results ===
+Total conversations: 266584
+Valid conversations: 266500
+Success rate: 99.97%
+
+=== Conversation Statistics ===
+Average conversation length: 6.44 turns
+Median conversation length: 6.00 turns
+Min/Max conversation length: 2/138 turns
+
+=== Turn Statistics ===
+Average turn length: 141.29 words
+Median turn length: 76.00 words
+Min/Max turn length: 1/63949 words
+
+=== Most Common Role Patterns ===
+human → gpt → human → gpt: 76529 (28.7%)
+human → gpt → human → gpt → human → gpt: 75470 (28.3%)
+human → gpt → human → gpt → human → gpt → human → gpt: 62050 (23.3%)
+human → gpt: 19164 (7.2%)
+human → gpt → human → gpt → human → gpt → human → gpt → human → gpt: 14730 (5.5%)
+human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt: 8060 (3.0%)
+human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt: 6134 (2.3%)
+human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt: 1584 (0.6%)
+human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt: 863 (0.3%)
+human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt → human → gpt: 529 (0.2%)
+
+=== Errors (showing first 20) ===
+Line 25: Empty content at index 2
+Line 1311: Empty content at index 0
+Line 2947: Empty content at index 6
+Line 4398: Empty content at index 0
+Line 4468: Empty content at index 6
+Line 4815: Empty content at index 6
+Line 5025: Empty content at index 0
+Line 5054: Empty content at index 6
+Line 5393: Empty content at index 4
+Line 6109: Empty content at index 0
+Line 7414: Empty content at index 2
+Line 7417: Empty content at index 6
+Line 7893: Empty content at index 6
+Line 8136: Empty content at index 8
+Line 8262: Empty content at index 4
+Line 9065: Empty content at index 0
+Line 9873: Empty content at index 4
+Line 11607: Empty content at index 0
+Line 12765: Empty content at index 1
+Line 13870: Empty content at index 4
+... and 64 more errors
+
+=== Sample Conversations (first 3) ===
+
+Sample 1 (ID: QWJhYvA_0):
+  human: Summarize the main ideas of Jeff Walker's Product Launch Formula into bullet points as it pertains t...
+  gpt: Here are the main ideas of Jeff Walker's Product Launch Formula that can be applied by a growth mark...
+  human: Summarize the main ideas of Brendon Burchard's Experts Academy into bullet points as it pertains to ...
+  gpt: Here are the main ideas of Brendon Burchard's Experts Academy that can be applied by a growth market...
+  ... and 8 more turns
+
+Sample 2 (ID: i6IyJda_0):
+  human: How to tell if a customer segment is well segmented? In 3 bullet points.
+  gpt: 1. Homogeneity: The segment should consist of customers who share similar characteristics and behavi...
+
+Sample 3 (ID: A5AbcES_0):
+  human: In Java, I want to replace string like "This is a new {object} at {place}" with a Map, {object: "stu...
+  gpt: You can use the `String.format()` method in Java to replace placeholders in a string with values fro...
+=== Next Steps ===
+1. Use with Online RL:
+   python -m eagle.evaluation.gen_ea_answer_llama3chat_rl \
+     --base-model-path meta-llama/Llama-3.1-8B-Instruct \
+     --ea-model-path ./eagle_conversational_model \
+     --use-online-rl \
+     --online-lr 0.001
+
+Data processing complete! ✅

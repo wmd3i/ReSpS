@@ -1,0 +1,16 @@
+# Additional requirements for RL functionality
+# Add these to your existing requirements.txt or install separately
+
+# RL framework
+stable-baselines3>=2.0.0
+gymnasium>=0.26.0  # Updated gym interface
+shimmy>=2.0.0  # Required for gym compatibility
+
+# Text embeddings
+sentence-transformers>=2.2.0
+
+# Additional dependencies that may be needed
+#tensorboard>=2.10.0  # For training monitoring
+
+# Legacy gym for compatibility (if needed)
+#gym>=0.21.0
