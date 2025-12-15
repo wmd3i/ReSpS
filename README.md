@@ -1,4 +1,4 @@
-# [AAAI 2026] Re-SpS: A Reinforcement Learning Approach to Speculative Sampling
+# [AAAI 2026] Re-SpS: Speculative Sampling with Reinforcement Learning
 
 This repository contains the official code for the paper "Re-SpS: A Reinforcement Learning Approach to Speculative Sampling".
 
