@@ -1,6 +1,6 @@
-# [AAAI 2026] A Reinforcement Learning Approach to Speculative Sampling [PDF](https://steven202.github.io/chenan.github.io/files/26aaai-resps.pdf)
+# [AAAI 2026] A Reinforcement Learning Approach to Speculative Sampling
 
-This repository contains the official code for the paper "Re-SpS: A Reinforcement Learning Approach to Speculative Sampling".
+This repository contains the official code for the paper "Re-SpS: A Reinforcement Learning Approach to Speculative Sampling" [(PDF)](https://steven202.github.io/chenan.github.io/files/26aaai-resps.pdf).
 
 ## Directory Structure
 
